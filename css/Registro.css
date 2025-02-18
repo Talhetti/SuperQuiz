@@ -26,6 +26,7 @@ body{
     width: 200px;
     height: 200px;
     border-radius: 500px;
+    border: 2px solid black;
 }.imagem-logo{
     text-align: center;
     margin-top: 20px;
@@ -33,6 +34,8 @@ body{
 }
 
 .Titulo{
-    font-family: Arial, Helvetica, sans-serif;
+    color: orange;
     text-align: center;
+    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
 }
