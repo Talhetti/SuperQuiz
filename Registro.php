@@ -16,21 +16,34 @@
         <div class="Titulo">
             <h1>REGISTRE-SE</h1>
         </div>
-        <div class="Form-User">
-            <form action="Registro.php" method="POST">
+
+        <form action="" method="POST" class="Form-User">
+            <div class="form-group">
                 <label for="">Nome: </label>
                 <input type="text">
-                
+            </div>
+            <div class="form-group">
                 <label for="">Email: </label>
                 <input type="text">
+            </div>
 
-                <label for="">Senha: </label>
-                <input type="password">
+            <div class="form-group">
+                <label for="Senha">Senha: </label>
+                <div class="InputSenha">
+                    <input type="password" id="Password">
+                    <span class="VerSenha" onclick="VerSenha()">🙈</span>
+                </div>
 
+            </div>
+            <div class="botao">
                 <button type="Submit">Enviar</button>
-            </form>
-        </div>
-    
+            </div>
+        </form>
+
+
     </div>
+
+    <script src="js/Registro.js"></script>
 </body>
+
 </html>
