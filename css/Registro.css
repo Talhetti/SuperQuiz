@@ -10,15 +10,6 @@ body{
     background: linear-gradient(to top, orange, pink);
 }
 
-#input > * {
-  height: 1.3em;
-  float: left;
-}
-
-#input img {
-  cursor: pointer;
-}
-
 .containerPrincipal{
     position: absolute;
     top: 50%;
