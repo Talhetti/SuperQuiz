@@ -9,7 +9,7 @@
 
         if(empty($Nome) || empty($Email) || empty($Senha))
         { //Verificador de CAMPO VAZIO
-            $messageCampoVazio = "<p 
+            $erros = "<p 
             style='background-color: white; text-align: center; font-size: 15px; margin-top: 10px; color: red;'>
             Preencher todos os campos!<p>";
         }
@@ -24,7 +24,8 @@
                 $query = "INSERT INTO usuario (Nome_Usuario, Email_Usuario, Senha_Usuario) value ('$nome', '$Email', '$Senha')";
         
                 $stmt = $pdo->prepare($query); 
-                $stmt->execute(); 
+                $stmt->execute();
+                echo "CADASTRADO!"; 
             }
 
         }
@@ -80,7 +81,7 @@
 
     </div>
 
-    <script src="js/Registro.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
