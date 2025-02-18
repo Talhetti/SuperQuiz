@@ -1,11 +1,12 @@
 <?php
-$hostname = "127.0.0.1";
+$hostname = "Localhost";
 $user = "root";
 $password = "";
 $dbname = "db-genioquiz";
 
-try{
-    $pdo = new PDO("mysql:host=$hostname; dbname=$dbname", $user, $password);
-}catch(PDOException $e){
-    echo $e->getMessage();
+$pdo = new mysqli($hostname, $user, $password, $dbname);
+
+if($pdo->connect_error){
+    die("Falha na conexão: " . $pdo->connect_error);
 }
+// echo "Conexão bem-sucedida!";

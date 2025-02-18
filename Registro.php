@@ -18,7 +18,7 @@
             $EmailCheck = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email'";
             $resultado = $pdo->query($EmailCheck);
 
-            if ($resultado->rowCount() > 0) { //VERIFICAR DE EMAIL JÁ EXISTENTE
+            if ($resultado->num_rows > 0) { //VERIFICAR DE EMAIL JÁ EXISTENTE
                 $erros = "<p style='background-color: white; text-align: center; font-size: 15px; margin-top: 10px; color: red;'>E-mail cadastrado anteriormente!<p>";
             }else{
                 $query = "INSERT INTO usuario (Nome_Usuario, Email_Usuario, Senha_Usuario) value ('$nome', '$Email', '$Senha')";
