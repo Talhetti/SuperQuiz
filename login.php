@@ -1,18 +1,40 @@
-<?php
-$erros = "";
+<?php 
+    include('conexao.php');
+    $erros = "";
 
+    if(isset($_POST['Submit'])){
+        $Email = $_POST['Email'];
+        $Senha = $_POST['Senha'];
 
+        if(empty($Email) || empty($Senha)){
+            $erros = "Preencha todos os campos";
+        } else {
+            $sqlSelect = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email' AND Senha_Usuario = '$Senha'";
+            $resultadoSelect = mysqli_query($pdo, $sqlSelect);
+            $resultado = mysqli_fetch_assoc($resultadoSelect);
 
+            if($resultado){
+                header('Location: testando.php');
+                exit();
+            } else {
+                $erros = "Email ou senha incorretos";
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
+    <title>Login - Genio Quiz</title>
     <meta charset="UTF-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/Login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Projeto Genio Quiz</title>
 </head>
+
 <body>
-<div class="containerPrincipal">
+    <div class="containerPrincipal">
         <div class="imagem-logo">
             <img src="img/Logo.png" alt="">
         </div>
@@ -20,11 +42,8 @@ $erros = "";
             <h1>LOGAR</h1>
         </div>
 
-        <form action="Registro.php" method="POST" class="Form-User">
-            <div class="form-group">
-                <label for="Nome">Nome: </label>
-                <input type="text" name="Nome">
-            </div>
+        <form action="login.php" method="POST" class="Form-User">
+
             <div class="form-group">
                 <label for="Email">Email: </label>
                 <input type="text" name="Email">
@@ -41,11 +60,13 @@ $erros = "";
 
             <div class="botao">
                 <button type="Submit" name="Submit">Enviar</button>
-                <p stlye="font-size: 10px;">Já tem login?<a href="login.php" >Login</a></p>
+                <p style="
+                    margin-top: 6px; ">Não possui um login?<a href=" Registro.php">Registre-se</a></p>
             </div>
-            <?php echo "<p style='text-align: center; color: red;'>$erros</p>"?>
+            <?php echo "<p style='text-align: center; color: red;'>$erros</p>" ?>
         </form>
 
     </div>
 </body>
+
 </html>

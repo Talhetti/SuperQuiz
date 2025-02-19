@@ -1,6 +1,7 @@
 <?php
 require("conexao.php");
 $erros = "";
+
 if (isset($_POST['Submit'])) {
     $Nome = trim($_POST['Nome']);
     $Email = trim($_POST['Email']);
@@ -12,22 +13,21 @@ if (isset($_POST['Submit'])) {
         $EmailCheck = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email'";
         $EmailCheckResult = mysqli_query($pdo, $EmailCheck);
         $resultadoSelect = mysqli_fetch_assoc($EmailCheckResult);
-        
+
         if ($resultadoSelect) {
             $erros = "Email já cadastrado";
         } else {
             $SQLInsert = "INSERT INTO Usuario (Nome_Usuario, Email_Usuario, Senha_Usuario) 
                           VALUES ('$Nome', '$Email', '$Senha')";
             $resultadoInsert = mysqli_query($pdo, $SQLInsert);
-        
+
             if ($resultadoInsert) {
                 header('Location: login.php');
-                exit(); 
+                exit();
             } else {
                 $erros = "Erro ao cadastrar usuário.";
             }
         }
-        
     }
 }
 ?>
@@ -72,9 +72,14 @@ if (isset($_POST['Submit'])) {
 
             <div class="botao">
                 <button type="Submit" name="Submit">Enviar</button>
-                <p stlye="font-size: 10px;">Já tem login?<a href="login.php" >Login</a></p>
+                <div class="paragrafo">
+                    <p style="
+                    margin-top: 6px;
+                    font-size: 18px;
+                    ">Já tem login?<a href="login.php">Login</a></p>
+                </div>
             </div>
-            <?php echo "<p style='text-align: center; color: red;'>$erros</p>"?>
+            <?php echo "<p style='text-align: center; color: red;'>$erros</p>" ?>
         </form>
 
     </div>
