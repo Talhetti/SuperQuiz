@@ -51,20 +51,20 @@ if (isset($_POST['Submit'])) {
             <h1>REGISTRE-SE</h1>
         </div>
 
-        <form action="Registro.php" method="POST" class="Form-User">
+        <form action="registro.php" method="POST" class="Form-User">
             <div class="form-group">
                 <label for="Nome">Nome: </label>
-                <input type="text" name="Nome">
+                <input type="text" name="Nome" required>
             </div>
             <div class="form-group">
                 <label for="Email">Email: </label>
-                <input type="text" name="Email">
+                <input type="text" name="Email" required>
             </div>
 
             <div class="form-group">
                 <label for="Senha">Senha: </label>
                 <div class="InputSenha">
-                    <input type="password" id="Password" name="Senha">
+                    <input type="password" id="Password" name="Senha" required>
                     <span class="VerSenha" onclick="VerSenha()">🙈</span>
                 </div>
 
@@ -72,14 +72,11 @@ if (isset($_POST['Submit'])) {
 
             <div class="botao">
                 <button type="Submit" name="Submit">Enviar</button>
-                <div class="paragrafo">
-                    <p style="
-                    margin-top: 6px;
-                    font-size: 18px;
-                    ">Já tem login?<a href="login.php">Login</a></p>
-                </div>
             </div>
-            <?php echo "<p style='text-align: center; color: red;'>$erros</p>" ?>
+            <div class="paragrafo">
+                <p style="margin-top: 10px; font-size: 18px; text-align: center;">Já tem login?<a href="login.php">Login</a></p>
+            </div>
+            <?php echo "<p style='text-align: center; color: red; font-size: 18px;'>$erros</p>" ?>
         </form>
 
     </div>

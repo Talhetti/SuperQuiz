@@ -60,9 +60,9 @@
 
             <div class="botao">
                 <button type="Submit" name="Submit">Enviar</button>
-                <p style="
-                    margin-top: 6px; ">Não possui um login?<a href=" Registro.php">Registre-se</a></p>
             </div>
+            <p style="
+            margin-top: 15px; text-align: center;">Não possui um login?<a href=" Registro.php">Registre-se</a></p>
             <?php echo "<p style='text-align: center; color: red;'>$erros</p>" ?>
         </form>
 
