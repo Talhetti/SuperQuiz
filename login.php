@@ -1,3 +1,9 @@
+<?php
+$erros = "";
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +17,7 @@
             <img src="img/Logo.png" alt="">
         </div>
         <div class="Titulo">
-            <h1>REGISTRE-SE</h1>
+            <h1>LOGAR</h1>
         </div>
 
         <form action="Registro.php" method="POST" class="Form-User">
