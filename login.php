@@ -1,49 +1,12 @@
-<?php
-require("conexao.php");
-$erros = "";
-if (isset($_POST['Submit'])) {
-    $Nome = trim($_POST['Nome']);
-    $Email = trim($_POST['Email']);
-    $Senha = trim($_POST['Senha']);
-
-    if (empty($Nome) || empty($Email) || empty($Senha)) {
-        $erros = "Preencha todos os campos";
-    } else {
-        $EmailCheck = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email'";
-        $EmailCheckResult = mysqli_query($pdo, $EmailCheck);
-        $resultadoSelect = mysqli_fetch_assoc($EmailCheckResult);
-        
-        if ($resultadoSelect) {
-            $erros = "Email já cadastrado";
-        } else {
-            $SQLInsert = "INSERT INTO Usuario (Nome_Usuario, Email_Usuario, Senha_Usuario) 
-                          VALUES ('$Nome', '$Email', '$Senha')";
-            $resultadoInsert = mysqli_query($pdo, $SQLInsert);
-        
-            if ($resultadoInsert) {
-                header('Location: login.php');
-                exit(); 
-            } else {
-                $erros = "Erro ao cadastrar usuário.";
-            }
-        }
-        
-    }
-}
-?>
-
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="en">
 <head>
-    <title>Registro - Super Quiz</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/Registro.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Projeto Genio Quiz</title>
 </head>
-
 <body>
-    <div class="containerPrincipal">
+<div class="containerPrincipal">
         <div class="imagem-logo">
             <img src="img/Logo.png" alt="">
         </div>
@@ -78,8 +41,5 @@ if (isset($_POST['Submit'])) {
         </form>
 
     </div>
-
-    <script src="js/main.js"></script>
 </body>
-
 </html>

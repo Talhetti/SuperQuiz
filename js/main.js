@@ -1,12 +1,12 @@
-function VerSenha() {
-    let Senhainput = document.getElementById("Password");
-    let MudarIcon = document.querySelector(".VerSenha");
+        function VerSenha() {
+            let SenhaInput = document.getElementById("Password");
+            let MudarIcon = document.querySelector(".VerSenha");
 
-    if (Senhainput.type === "password") {
-        Senhainput.type = "text";
-        MudarIcon.textContent = "🐵";
-    } else {
-        Senhainput.type = "password";
-        MudarIcon.textContent = "🙈";
-    }
-}
+            if (SenhaInput.type === "password") {
+                SenhaInput.type = "text";
+                MudarIcon.textContent = "🐵";
+            } else {
+                SenhaInput.type = "password";
+                MudarIcon.textContent = "🙈";
+            }
+        }
