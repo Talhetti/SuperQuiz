@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("conexao.php");
 $erros = "";
 
@@ -6,6 +7,8 @@ if (isset($_POST['Submit'])) {
     $Nome = trim($_POST['Nome']);
     $Email = trim($_POST['Email']);
     $Senha = trim($_POST['Senha']);
+
+    $_SESSION['nome'] = $nome;
 
     if (empty($Nome) || empty($Email) || empty($Senha)) {
         $erros = "Preencha todos os campos";

@@ -1,26 +1,34 @@
-<?php 
-    include('conexao.php');
-    $erros = "";
+<?php
+session_start();
+include('conexao.php');
+$erros = "";
 
-    if(isset($_POST['Submit'])){
-        $Email = $_POST['Email'];
-        $Senha = $_POST['Senha'];
+if (isset($_POST['Submit'])) {
+    $Email = $_POST['Email'];
+    $Senha = $_POST['Senha'];
 
-        if(empty($Email) || empty($Senha)){
-            $erros = "Preencha todos os campos";
-        } else {
-            $sqlSelect = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email' AND Senha_Usuario = '$Senha'";
-            $resultadoSelect = mysqli_query($pdo, $sqlSelect);
-            $resultado = mysqli_fetch_assoc($resultadoSelect);
+    if (empty($Email) || empty($Senha)) {
+        $erros = "Preencha todos os campos";
+    } else {
+        $sqlSelect = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email' AND Senha_Usuario = '$Senha'";
+        $ResultadoSelect = mysqli_query($pdo, $sqlSelect);
 
-            if($resultado){
-                header('Location: testando.php');
+        if($ResultadoSelect){
+           $resultado = mysqli_fetch_assoc($ResultadoSelect);
+
+              if($resultado){
+                $_SESSION['Nome'] = $resultado['Nome_Usuario'];
+                header('Location: TelaInicial.php');
                 exit();
-            } else {
+              }else{
                 $erros = "Email ou senha incorretos";
-            }
+              }
+         
+        } else {
+            $erros = "Erro ao logar";
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
