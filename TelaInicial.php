@@ -30,7 +30,7 @@ if(!isset($_SESSION['Nome'])){
 
     <div id="container-menu">
         <div id="menu">
-            <button>Iniciar</button>
+            <button><a href="">Iniciar</a></button>
             <button>Ranking</button>
             <button>Sair</button>
         </div>
