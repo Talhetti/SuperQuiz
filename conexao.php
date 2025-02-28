@@ -1,7 +1,7 @@
 <?php
-$hostname = "Localhost";
+$hostname = "localhost";
 $user = "root";
-$password = "Bad16551eb0c";
+$password = "Tajetti08";
 $dbname = "bancoGenioQuiz";
 
 $pdo = new mysqli($hostname, $user, $password, $dbname);

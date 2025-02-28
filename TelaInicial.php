@@ -1,12 +1,10 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['Nome'])){
+if (!isset($_SESSION['Nome'])) {
     header('Location: login.php');
     exit();
 }
-
-
 
 ?>
 
@@ -22,18 +20,24 @@ if(!isset($_SESSION['Nome'])){
 
 <body>
     <div id="User-comprimento">
-    
-        <h2>Olá, <?php echo htmlspecialchars($_SESSION['Nome'])?></h2>
+
+        <h2>Olá, <?php echo htmlspecialchars($_SESSION['Nome']) ?></h2>
         <p>Vamos Começar?</p>
-    
+
     </div>
 
     <div id="container-menu">
-        <div id="menu">
-            <button><a href="">Iniciar</a></button>
-            <button>Ranking</button>
-            <button>Sair</button>
+
+        <div id="container-menu">
+            <form action="processador.php" method="POST" class="menu">
+                <button type="submit" name="Inciar">Iniciar</button>
+                <button type="submit" name="Ranking">Ranking</button>
+                <button type="submit" name="Sair">Sair</button>
+            </form>
         </div>
+
+
+
     </div>
 </body>
 
