@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to top, orange, pink);
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+.pergunta {
+    width: 60em;
+    height: 10em;
+    margin: 2em auto;
+    border-radius: 30px;
+    border: 1px solid black;
+    background-color: #fff;
+}
+
+.pergunta p {
+    padding: 4em;
+}
+
+.respostas {
+    width: 800px;
+    height: 350px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    border: 1px solid black;
+    background-color: #fff;
+}
+
+.OrgResposta {
+    display: ruby;
+}
+
+.respostas button {
+    width: 300px;
+    height: 60px;
+    margin: 10px;
+    margin-top: 8%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.5s;
+    border-radius: 10px;
+    background-color: orange;
+}
+
+.respostas button:hover {
+    background-color: pink;
+    color: #fff;
+    transition: 0.5s;
+}

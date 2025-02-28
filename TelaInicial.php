@@ -5,6 +5,7 @@ if (!isset($_SESSION['Nome']) && isset($_SESSION['Email'])) {
     header('Location: login.php');
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +30,7 @@ if (!isset($_SESSION['Nome']) && isset($_SESSION['Email'])) {
         <form action="processador.php" method="POST" class="menu">
             <button type="submit" name="Inciar">Iniciar</button>
             <button type="submit" name="Ranking">Ranking</button>
+            <button type="submit" name="Recomecar">Recomeçar</button>
             <button type="submit" name="Sair">Sair</button>
         </form>
     </div>
