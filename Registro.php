@@ -13,14 +13,14 @@ if (isset($_POST['Submit'])) {
     if (empty($Nome) || empty($Email) || empty($Senha)) {
         $erros = "Preencha todos os campos";
     } else {
-        $EmailCheck = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email'";
+        $EmailCheck = "SELECT * FROM usuario WHERE email = '$Email'";
         $EmailCheckResult = mysqli_query($pdo, $EmailCheck);
         $resultadoSelect = mysqli_fetch_assoc($EmailCheckResult);
 
         if ($resultadoSelect) {
             $erros = "Email já cadastrado";
         } else {
-            $SQLInsert = "INSERT INTO Usuario (Nome_Usuario, Email_Usuario, Senha_Usuario) 
+            $SQLInsert = "INSERT INTO usuario (nome, email, senha) 
                           VALUES ('$Nome', '$Email', '$Senha')";
             $resultadoInsert = mysqli_query($pdo, $SQLInsert);
 

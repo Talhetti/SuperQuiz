@@ -10,20 +10,19 @@ if (isset($_POST['Submit'])) {
     if (empty($Email) || empty($Senha)) {
         $erros = "Preencha todos os campos";
     } else {
-        $sqlSelect = "SELECT * FROM Usuario WHERE Email_Usuario = '$Email' AND Senha_Usuario = '$Senha'";
+        $sqlSelect = "SELECT * FROM usuario WHERE email = '$Email' AND senha = '$Senha'";
         $ResultadoSelect = mysqli_query($pdo, $sqlSelect);
 
-        if($ResultadoSelect){
-           $resultado = mysqli_fetch_assoc($ResultadoSelect);
+        if ($ResultadoSelect) {
+            $resultado = mysqli_fetch_assoc($ResultadoSelect);
 
-              if($resultado){
-                $_SESSION['Nome'] = $resultado['Nome_Usuario'];
+            if ($resultado) {
+                $_SESSION['Nome'] = $resultado['nome'];
                 header('Location: TelaInicial.php');
                 exit();
-              }else{
+            } else {
                 $erros = "Email ou senha incorretos";
-              }
-         
+            }
         } else {
             $erros = "Erro ao logar";
         }
