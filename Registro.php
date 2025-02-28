@@ -9,6 +9,7 @@ if (isset($_POST['Submit'])) {
     $Senha = trim($_POST['Senha']);
 
     $_SESSION['nome'] = $nome;
+    $_SESSION['email'] = $email;
 
     if (empty($Nome) || empty($Email) || empty($Senha)) {
         $erros = "Preencha todos os campos";

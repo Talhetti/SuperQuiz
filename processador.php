@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 if (isset($_POST['Inciar'])) {
     header('Location: quiz.php');

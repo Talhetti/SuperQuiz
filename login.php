@@ -18,6 +18,7 @@ if (isset($_POST['Submit'])) {
 
             if ($resultado) {
                 $_SESSION['Nome'] = $resultado['nome'];
+                $_SESSION['Email'] = $resultado['email'];
                 header('Location: TelaInicial.php');
                 exit();
             } else {

@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['Nome'])) {
+if (!isset($_SESSION['Nome']) && isset($_SESSION['Email'])) {
     header('Location: login.php');
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -27,17 +26,11 @@ if (!isset($_SESSION['Nome'])) {
     </div>
 
     <div id="container-menu">
-
-        <div id="container-menu">
-            <form action="processador.php" method="POST" class="menu">
-                <button type="submit" name="Inciar">Iniciar</button>
-                <button type="submit" name="Ranking">Ranking</button>
-                <button type="submit" name="Sair">Sair</button>
-            </form>
-        </div>
-
-
-
+        <form action="processador.php" method="POST" class="menu">
+            <button type="submit" name="Inciar">Iniciar</button>
+            <button type="submit" name="Ranking">Ranking</button>
+            <button type="submit" name="Sair">Sair</button>
+        </form>
     </div>
 </body>
 
