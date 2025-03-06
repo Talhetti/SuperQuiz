@@ -19,6 +19,8 @@ if (isset($_POST['Submit'])) {
             if ($resultado) {
                 $_SESSION['Nome'] = $resultado['nome'];
                 $_SESSION['Email'] = $resultado['email'];
+                $_SESSION['Id_Usuario'] = $resultado['id_usuario'];
+                $_SESSION['Pontuacao'] = 0;
                 header('Location: TelaInicial.php');
                 exit();
             } else {

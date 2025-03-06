@@ -1,33 +1,22 @@
 <?php
 session_start();
-include 'conexao.php';
+include('conexao.php');
 
-if (!isset($_SESSION['perguntas_respondidas'])) {
-    $_SESSION['perguntas_respondidas'] = [];
+if (!isset($_SESSION['Id_Usuario'])) {
+    header('Location: login.php');
+    exit();
 }
 
-$sqlQuestao = "SELECT * FROM perguntas";
-if (!empty($_SESSION['perguntas_respondidas'])) {
-    $sqlQuestao .= " WHERE id_pergunta NOT IN (" . implode(',', $_SESSION['perguntas_respondidas']) . ")";
-}
+$QueryPergunta = "SELECT * FROM perguntas ORDER BY RAND() LIMIT 1";
+$ResultadoPergunta = mysqli_query($pdo, $QueryPergunta);
+$Pergunta = mysqli_fetch_assoc($ResultadoPergunta);
 
-$sqlQuestao .= " ORDER BY RAND() LIMIT 1";
-$resultQuestao = mysqli_query($pdo, $sqlQuestao);
+$QueryRespostas = "SELECT * FROM respostas WHERE id_pergunta = " . $Pergunta['id_pergunta'];
+$ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
 
-if (mysqli_num_rows($resultQuestao) == 0) {
-    echo 'Acabaram as perguntas';
-    exit;
-}
-
-$questao = mysqli_fetch_assoc($resultQuestao);
-
-$_SESSION['perguntas_respondidas'][] = $questao['id_pergunta'];
-$_SESSION['pergunta_atual'] = $questao['id_pergunta'];
-
-$SQLRESPOSTA = "SELECT * FROM respostas WHERE id_pergunta = " . $questao['id_pergunta'];
-$resultRespostas = mysqli_query($pdo, $SQLRESPOSTA);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,16 +30,24 @@ $resultRespostas = mysqli_query($pdo, $SQLRESPOSTA);
 <body>
 
     <section class="pergunta">
-        <p><?php echo $questao['enunciado']; ?></p><!--Pergunta-->
+        <p><?php echo $Pergunta['enunciado']; ?></p>
     </section>
 
     <section class="respostas">
-        <form class="OrgResposta" action="processadorResposta.php" method="POST">
-            <?php while ($resposta = mysqli_fetch_assoc($resultRespostas)): ?>
-                <button type="submit" name="resposta" value="<?php echo $resposta['id_resposta']; ?>">
-                    <?php echo $resposta['resposta_texto']; ?>
-                </button><br>
-            <?php endwhile; ?>
+        <form action="quiz.php" method="POST">
+            <input type="hidden" name="id_pergunta" value="<?php echo $Pergunta['id_pergunta']; ?>">
+
+            <?php
+            if ($ResultadoRespostas) {
+                while ($alternativa = mysqli_fetch_assoc($ResultadoRespostas)) { ?>
+                    <button type="submit" name="resposta" value="<?php echo $alternativa['id_resposta']; ?>">
+                        <?php echo $alternativa['resposta_texto']; ?>
+                    </button>
+            <?php }
+            } else {
+                echo "<p>Erro ao carregar as respostas.</p>";
+            }
+            ?>
         </form>
     </section>
 
