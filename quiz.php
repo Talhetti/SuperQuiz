@@ -53,8 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id_resposta == $RespostaCorreta) {
         echo "<script>alert('Resposta correta! Parabéns!');</script>";
+        $_SESSION['pontuacao'] += 1;
     } else {
         echo "<script>alert('Resposta incorreta. Tente novamente!');</script>";
+        $_SESSION['pontuacao'] = $_SESSION['pontuacao'];
     }
 }
 
