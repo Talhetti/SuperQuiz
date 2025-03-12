@@ -14,7 +14,6 @@ if (!isset($_SESSION['pontuacao'])) {
 
 //**** PEGANDO PERGUNTA DO BANCO DE DADOS ****//
 
-// Array de perguntas respondidas
 if (!isset($_SESSION['perguntas_respondidas'])) {
     $_SESSION['perguntas_respondidas'] = [];
 }
@@ -26,7 +25,7 @@ $TotalPerguntas = mysqli_fetch_assoc($ResultadoTotal)['total'];
 
 // Verifica se todas as perguntas já foram respondidas
 if (count($_SESSION['perguntas_respondidas']) >= $TotalPerguntas) {
-    echo "<p>Parabéns! Você respondeu todas as perguntas.</p>";
+    echo "<p style='text-align: center; font-size: 30px; position: relative; top: 30%;' >Parabéns! Você respondeu todas as perguntas. <br> Voltando para tela inicial automaticamente...</p>";
     header('Refresh: 2; URL=TelaInicial.php'); // Redireciona após 2 segundos
     exit();
 }
@@ -45,7 +44,9 @@ array_push($_SESSION['perguntas_respondidas'], $Pergunta['id_pergunta']);
 $QueryRespostas = "SELECT * FROM respostas WHERE id_pergunta = " . $Pergunta['id_pergunta'];
 $ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
 
-//****** VERIFICANDO RESPOSTA DA PERGUNTA E RETORNANDO CORRETO AO USUÁRIO 
+//****** VERIFICANDO RESPOSTA DA PERGUNTA E RETORNANDO CORRETO AO USUÁRIO
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_pergunta = $_POST['id_pergunta'];
     $id_resposta = $_POST['resposta'];
