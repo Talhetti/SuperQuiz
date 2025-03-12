@@ -63,11 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ResultadoVerifica = mysqli_query($pdo, $VerificaRanking);
 
         if (mysqli_num_rows($ResultadoVerifica) > 0) {
-            // Atualiza a pontuação se o jogador já está no ranking
             $AtualizaPontuacao = "UPDATE ranking SET pontuacao = pontuacao + 1 WHERE usuario_id = $id_usuario";
             mysqli_query($pdo, $AtualizaPontuacao);
         } else {
-            // Cria uma nova entrada no ranking se ainda não existir
             $InsereRanking = "INSERT INTO ranking (usuario_id, pontuacao, posicao) VALUES ($id_usuario, 1, 0)";
             mysqli_query($pdo, $InsereRanking);
         }
