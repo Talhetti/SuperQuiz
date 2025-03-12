@@ -23,7 +23,7 @@ $TotalPerguntas = mysqli_fetch_assoc($ResultadoTotal)['total'];
 // Verifica se todas as perguntas já foram respondidas
 if (count($_SESSION['perguntas_respondidas']) >= $TotalPerguntas) {
     echo "<p>Parabéns! Você respondeu todas as perguntas.</p>";
-    session_destroy(); // Ou limpar o array pra recomeçar
+    header('Refresh: 2; URL=TelaInicial.php'); // Redireciona após 2 segundos
     exit();
 }
 
@@ -42,7 +42,21 @@ $QueryRespostas = "SELECT * FROM respostas WHERE id_pergunta = " . $Pergunta['id
 $ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
 
 //****** VERIFICANDO RESPOSTA DA PERGUNTA E RETORNANDO CORRETO AO USUÁRIO 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_pergunta = $_POST['id_pergunta'];
+    $id_resposta = $_POST['resposta'];
 
+    // Pega a resposta correta
+    $QueryCorreta = "SELECT id_resposta FROM respostas WHERE id_pergunta = $id_pergunta AND is_correta = 1";
+    $ResultadoCorreta = mysqli_query($pdo, $QueryCorreta);
+    $RespostaCorreta = mysqli_fetch_assoc($ResultadoCorreta)['id_resposta'];
+
+    if ($id_resposta == $RespostaCorreta) {
+        echo "<script>alert('Resposta correta! Parabéns!');</script>";
+    } else {
+        echo "<script>alert('Resposta incorreta. Tente novamente!');</script>";
+    }
+}
 
 
 ?>
@@ -55,6 +69,12 @@ $ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
     <link rel="stylesheet" href="css/quiz.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz | Projeto GenioQuiz</title>
+    <script>
+        function desabilitarBotoes() {
+            const botoes = document.querySelectorAll('button');
+            botoes.forEach(botao => botao.disabled = true);
+        }
+    </script>
 </head>
 
 <body>
