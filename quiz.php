@@ -2,17 +2,47 @@
 session_start();
 include('conexao.php');
 
+// Verifica se o usuário está logado
 if (!isset($_SESSION['Id_Usuario'])) {
     header('Location: login.php');
     exit();
 }
 
-$QueryPergunta = "SELECT * FROM perguntas ORDER BY RAND() LIMIT 1";
-$ResultadoPergunta = mysqli_query($pdo, $QueryPergunta);
-$Pergunta = mysqli_fetch_assoc($ResultadoPergunta);
+//**** PEGANDO PERGUNTA DO BANCO DE DADOS ****//
 
+// Array de perguntas respondidas
+if (!isset($_SESSION['perguntas_respondidas'])) {
+    $_SESSION['perguntas_respondidas'] = [];
+}
+
+// Conta quantas perguntas existem no banco
+$QueryTotalPerguntas = "SELECT COUNT(*) AS total FROM perguntas";
+$ResultadoTotal = mysqli_query($pdo, $QueryTotalPerguntas);
+$TotalPerguntas = mysqli_fetch_assoc($ResultadoTotal)['total'];
+
+// Verifica se todas as perguntas já foram respondidas
+if (count($_SESSION['perguntas_respondidas']) >= $TotalPerguntas) {
+    echo "<p>Parabéns! Você respondeu todas as perguntas.</p>";
+    session_destroy(); // Ou limpar o array pra recomeçar
+    exit();
+}
+
+// Loop até encontrar uma pergunta não respondida
+do {
+    $QueryPergunta = "SELECT * FROM perguntas ORDER BY RAND() LIMIT 1";
+    $ResultadoPergunta = mysqli_query($pdo, $QueryPergunta);
+    $Pergunta = mysqli_fetch_assoc($ResultadoPergunta);
+} while (in_array($Pergunta['id_pergunta'], $_SESSION['perguntas_respondidas']));
+
+// Adiciona a pergunta ao array de respondidas
+array_push($_SESSION['perguntas_respondidas'], $Pergunta['id_pergunta']);
+
+// Pega as respostas dessa pergunta
 $QueryRespostas = "SELECT * FROM respostas WHERE id_pergunta = " . $Pergunta['id_pergunta'];
 $ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
+
+//****** VERIFICANDO RESPOSTA DA PERGUNTA E RETORNANDO CORRETO AO USUÁRIO 
+
 
 
 ?>
@@ -38,7 +68,7 @@ $ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
             <input type="hidden" name="id_pergunta" value="<?php echo $Pergunta['id_pergunta']; ?>">
 
             <?php
-            if ($ResultadoRespostas) {
+            if ($ResultadoRespostas && mysqli_num_rows($ResultadoRespostas) > 0) {
                 while ($alternativa = mysqli_fetch_assoc($ResultadoRespostas)) { ?>
                     <button type="submit" name="resposta" value="<?php echo $alternativa['id_resposta']; ?>">
                         <?php echo $alternativa['resposta_texto']; ?>
