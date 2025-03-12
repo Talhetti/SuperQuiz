@@ -8,6 +8,10 @@ if (!isset($_SESSION['Id_Usuario'])) {
     exit();
 }
 
+if (!isset($_SESSION['pontuacao'])) {
+    $_SESSION['pontuacao'] = 0;
+}
+
 //**** PEGANDO PERGUNTA DO BANCO DE DADOS ****//
 
 // Array de perguntas respondidas
@@ -54,9 +58,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id_resposta == $RespostaCorreta) {
         echo "<script>alert('Resposta correta! Parabéns!');</script>";
         $_SESSION['pontuacao'] += 1;
+        $id_usuario = $_SESSION['Id_Usuario'];
+        $VerificaRanking = "SELECT * FROM ranking WHERE usuario_id = $id_usuario";
+        $ResultadoVerifica = mysqli_query($pdo, $VerificaRanking);
+
+        if (mysqli_num_rows($ResultadoVerifica) > 0) {
+            // Atualiza a pontuação se o jogador já está no ranking
+            $AtualizaPontuacao = "UPDATE ranking SET pontuacao = pontuacao + 1 WHERE usuario_id = $id_usuario";
+            mysqli_query($pdo, $AtualizaPontuacao);
+        } else {
+            // Cria uma nova entrada no ranking se ainda não existir
+            $InsereRanking = "INSERT INTO ranking (usuario_id, pontuacao, posicao) VALUES ($id_usuario, 1, 0)";
+            mysqli_query($pdo, $InsereRanking);
+        }
     } else {
         echo "<script>alert('Resposta incorreta. Tente novamente!');</script>";
-        $_SESSION['pontuacao'] = $_SESSION['pontuacao'];
     }
 }
 
@@ -68,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="css/Quiz.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz | Projeto GenioQuiz</title>
     <script>
