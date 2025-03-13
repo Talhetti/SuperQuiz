@@ -8,6 +8,7 @@ body {
     background: linear-gradient(to top, orange, pink);
     width: 100%;
     height: 100vh;
+    overflow: hidden;
 }
 
 .containerTable {
@@ -38,7 +39,14 @@ li {
     text-align: center;
 }
 
+.ranking {
+    margin: 10px auto;
+}
+
 a {
+    position: relative;
+    top: 30px;
+    left: 30px;
     width: 60px;
     padding: 5px 20px;
     border: 1px solid black;
