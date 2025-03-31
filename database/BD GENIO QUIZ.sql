@@ -1,11 +1,11 @@
-/*create database bancoGenioQuiz;*/
+create database bancoGenioQuiz;
 use bancoGenioQuiz;
 
 SHOW CREATE TABLE usuario;
 
 
 
-/*
+
 CREATE TABLE usuario (
     usuario_id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE usuario (
     senha VARCHAR(255) NOT NULL,
     pontuacao INT DEFAULT 0
 );
-*/
+
 CREATE TABLE ranking (
     ranking_id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT,
@@ -25,7 +25,6 @@ CREATE TABLE ranking (
     ON UPDATE CASCADE
 );
 
-/*
 CREATE TABLE perguntas (
     pergunta_id INT PRIMARY KEY AUTO_INCREMENT,
     pergunta_texto TEXT NOT NULL,
