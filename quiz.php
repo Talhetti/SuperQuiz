@@ -2,7 +2,6 @@
 session_start();
 include('conexao.php');
 
-// Verifica se o usuário está logado
 if (!isset($_SESSION['Id_Usuario'])) {
     header('Location: login.php');
     exit();
@@ -12,46 +11,35 @@ if (!isset($_SESSION['pontuacao'])) {
     $_SESSION['pontuacao'] = 0;
 }
 
-//**** PEGANDO PERGUNTA DO BANCO DE DADOS ****//
-
 if (!isset($_SESSION['perguntas_respondidas'])) {
     $_SESSION['perguntas_respondidas'] = [];
 }
 
-// Conta quantas perguntas existem no banco
 $QueryTotalPerguntas = "SELECT COUNT(*) AS total FROM perguntas";
 $ResultadoTotal = mysqli_query($pdo, $QueryTotalPerguntas);
 $TotalPerguntas = mysqli_fetch_assoc($ResultadoTotal)['total'];
 
-// Verifica se todas as perguntas já foram respondidas
 if (count($_SESSION['perguntas_respondidas']) >= $TotalPerguntas) {
     echo "<p style='text-align: center; font-size: 30px; position: relative; top: 30%;' >Parabéns! Você respondeu todas as perguntas. <br> Voltando para tela inicial automaticamente...</p>";
     header('Refresh: 2; URL=TelaInicial.php'); // Redireciona após 2 segundos
     exit();
 }
 
-// Loop até encontrar uma pergunta não respondida
 do {
     $QueryPergunta = "SELECT * FROM perguntas ORDER BY RAND() LIMIT 1";
     $ResultadoPergunta = mysqli_query($pdo, $QueryPergunta);
     $Pergunta = mysqli_fetch_assoc($ResultadoPergunta);
 } while (in_array($Pergunta['id_pergunta'], $_SESSION['perguntas_respondidas']));
 
-// Adiciona a pergunta ao array de respondidas
 array_push($_SESSION['perguntas_respondidas'], $Pergunta['id_pergunta']);
 
-// Pega as respostas dessa pergunta
 $QueryRespostas = "SELECT * FROM respostas WHERE id_pergunta = " . $Pergunta['id_pergunta'];
 $ResultadoRespostas = mysqli_query($pdo, $QueryRespostas);
-
-//****** VERIFICANDO RESPOSTA DA PERGUNTA E RETORNANDO CORRETO AO USUÁRIO
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_pergunta = $_POST['id_pergunta'];
     $id_resposta = $_POST['resposta'];
 
-    // Pega a resposta correta
     $QueryCorreta = "SELECT id_resposta FROM respostas WHERE id_pergunta = $id_pergunta AND is_correta = 1";
     $ResultadoCorreta = mysqli_query($pdo, $QueryCorreta);
     $RespostaCorreta = mysqli_fetch_assoc($ResultadoCorreta)['id_resposta'];
