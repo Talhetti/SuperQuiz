@@ -42,7 +42,7 @@ body {
   position: absolute;
   top: 60%;
   left: 50%;
-  width: 100%;
+  width: 637px;
   border-radius: 20px;
   transform: translate(-50%, -50%);
   padding: 20px;
@@ -73,4 +73,25 @@ button {
 
 button:hover {
   background-color: pink;
+}
+
+@media screen and (max-width: 768px) {
+  #User-comprimento {
+    width: 90%;
+    height: 160px;
+  }
+
+  #container-menu {
+    width: 90%;
+    height: 300px;
+    padding: 10px;
+  }
+
+  button {
+    width: 90%;
+    padding: 1em;
+    margin-top: 0.3em;
+    height: 3em;
+    font-size: 14px;
+  }
 }

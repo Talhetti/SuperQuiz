@@ -40,19 +40,15 @@ li {
   text-align: center;
 }
 
-.ranking {
-  margin: 10px auto;
-}
-
 a {
-  position: relative;
-  top: 30px;
-  left: 30px;
   width: 60px;
+  height: 20px;
   padding: 5px 20px;
   border: 1px solid black;
   border-radius: 20px;
   height: 25px;
+  text-decoration: none;
+  margin-bottom: 10px;
   background-color: orange;
   color: white;
   cursor: pointer;

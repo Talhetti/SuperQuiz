@@ -21,7 +21,7 @@ $TotalPerguntas = mysqli_fetch_assoc($ResultadoTotal)['total'];
 
 if (count($_SESSION['perguntas_respondidas']) >= $TotalPerguntas) {
     echo "<p style='text-align: center; font-size: 30px; position: relative; top: 30%;' >Parabéns! Você respondeu todas as perguntas. <br> Voltando para tela inicial automaticamente...</p>";
-    header('Refresh: 2; URL=TelaInicial.php'); // Redireciona após 2 segundos
+    header('Refresh: 1; URL=TelaInicial.php'); // Redireciona após 2 segundos
     exit();
 }
 

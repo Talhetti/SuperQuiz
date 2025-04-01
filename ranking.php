@@ -20,11 +20,10 @@ if (!isset($_SESSION['Id_Usuario'])) {
 </head>
 
 <body>
-    <div class="ranking">
-        <a href="TelaInicial.php">Voltar</a>
-    </div>
+
 
     <div class="containerTable">
+        <a href="TelaInicial.php">Voltar</a>
         <h2 style="margin-top: 10px;">Ranking de Jogadores</h2>
         <?php
         $QueryRanking = "SELECT u.nome, r.pontuacao 
