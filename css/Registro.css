@@ -6,7 +6,8 @@
 }
 
 body {
-  background: linear-gradient(to top, orange, pink);
+  background: linear-gradient(to top, #ffea00, #ff7eb3);
+
   height: 100vh;
   overflow: hidden;
 }

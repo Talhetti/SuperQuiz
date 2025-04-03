@@ -1,25 +1,32 @@
 <?php
 session_start();
-include('conexao.php');
+require("conexao.php");
 $erros = "";
 
 if (isset($_POST['Submit'])) {
-    $Email = $_POST['Email'];
-    $Senha = $_POST['Senha'];
+    $Email = trim($_POST['Email']);
+    $Senha = trim($_POST['Senha']);
 
     if (empty($Email) || empty($Senha)) {
         $erros = "Preencha todos os campos";
     } else {
-        $sqlSelect = "SELECT * FROM usuario WHERE email = '$Email' AND senha = '$Senha'";
-        $ResultadoSelect = mysqli_query($pdo, $sqlSelect);
+        $sqlSelect = "SELECT * FROM usuario WHERE email = ?";
+        $stmt = $conn->prepare($sqlSelect);
+        if (!$stmt) {
+            die("Erro na query: " . $conn->error);
+        }
 
-        if ($ResultadoSelect) {
-            $resultado = mysqli_fetch_assoc($ResultadoSelect);
+        $stmt->bind_param("s", $Email);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
-            if ($resultado) {
-                $_SESSION['Nome'] = $resultado['nome'];
-                $_SESSION['Email'] = $resultado['email'];
-                $_SESSION['Id_Usuario'] = $resultado['id_usuario'];
+        if ($resultado->num_rows > 0) {
+            $usuario = $resultado->fetch_assoc();
+
+            if (password_verify($Senha, $usuario['senha'])) {
+                $_SESSION['Nome'] = $usuario['nome'];
+                $_SESSION['Email'] = $usuario['email'];
+                $_SESSION['Id_Usuario'] = $usuario['usuario_id'];
                 $_SESSION['Pontuacao'] = 0;
                 header('Location: TelaInicial.php');
                 exit();
@@ -27,7 +34,7 @@ if (isset($_POST['Submit'])) {
                 $erros = "Email ou senha incorretos";
             }
         } else {
-            $erros = "Erro ao logar";
+            $erros = "Email ou senha incorretos";
         }
     }
 }

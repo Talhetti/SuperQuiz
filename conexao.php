@@ -1,11 +1,13 @@
 <?php
 $hostname = "localhost";
 $user = "root";
-$password = "Tajetti08";
+$password = "";
 $dbname = "bancoGenioQuiz";
 
-$pdo = new mysqli($hostname, $user, $password, $dbname);
+$conn = new mysqli($hostname, $user, $password, $dbname);
 
-if ($pdo->connect_error) {
-    die("Falha na conexão: " . $pdo->connect_error);
+if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
 }
+
+$conn->set_charset("utf8");

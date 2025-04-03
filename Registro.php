@@ -8,22 +8,26 @@ if (isset($_POST['Submit'])) {
     $Email = trim($_POST['Email']);
     $Senha = trim($_POST['Senha']);
 
-    $_SESSION['$nome'] = $nome;
-    $_SESSION['$email'] = $email;
-
     if (empty($Nome) || empty($Email) || empty($Senha)) {
         $erros = "Preencha todos os campos";
     } else {
-        $EmailCheck = "SELECT * FROM usuario WHERE email = '$Email'";
-        $EmailCheckResult = mysqli_query($pdo, $EmailCheck);
-        $resultadoSelect = mysqli_fetch_assoc($EmailCheckResult);
+        // Verifica se o email já está cadastrado
+        $EmailCheck = "SELECT * FROM usuario WHERE email = ?";
+        $stmt = $conn->prepare($EmailCheck);
+        $stmt->bind_param("s", $Email);
+        $stmt->execute();
+        $resultadoSelect = $stmt->get_result();
 
-        if ($resultadoSelect) {
+        if ($resultadoSelect->num_rows > 0) {
             $erros = "Email já cadastrado";
         } else {
-            $SQLInsert = "INSERT INTO usuario (nome, email, senha) 
-                          VALUES ('$Nome', '$Email', '$Senha')";
-            $resultadoInsert = mysqli_query($pdo, $SQLInsert);
+            // Hash da senha para maior segurança
+            $SenhaHash = password_hash($Senha, PASSWORD_DEFAULT);
+
+            $SQLInsert = "INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($SQLInsert);
+            $stmt->bind_param("sss", $Nome, $Email, $SenhaHash);
+            $resultadoInsert = $stmt->execute();
 
             if ($resultadoInsert) {
                 header('Location: login.php');
